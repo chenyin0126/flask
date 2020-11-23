@@ -268,9 +268,7 @@ class Blueprint(Scaffold):
         merge_dict_lists(self.teardown_request_funcs, app.teardown_request_funcs)
         merge_dict_lists(self.url_default_functions, app.url_default_functions)
         merge_dict_lists(self.url_value_preprocessors, app.url_value_preprocessors)
-        merge_dict_lists(
-            self.template_context_processors, app.template_context_processors
-        )
+        merge_dict_lists(self.template_context_processors, app.template_context_processors)
 
         merge_dict_nested(self.error_handler_spec, app.error_handler_spec)
 
@@ -399,9 +397,7 @@ class Blueprint(Scaffold):
         """Like :meth:`Flask.before_request`.  Such a function is executed
         before each request, even if outside of a blueprint.
         """
-        self.record_once(
-            lambda s: s.app.before_request_funcs.setdefault(None, []).append(f)
-        )
+        self.record_once(lambda s: s.app.before_request_funcs.setdefault(None, []).append(f))
         return f
 
     def before_app_first_request(self, f):
@@ -415,9 +411,7 @@ class Blueprint(Scaffold):
         """Like :meth:`Flask.after_request` but for a blueprint.  Such a function
         is executed after each request, even if outside of the blueprint.
         """
-        self.record_once(
-            lambda s: s.app.after_request_funcs.setdefault(None, []).append(f)
-        )
+        self.record_once(lambda s: s.app.after_request_funcs.setdefault(None, []).append(f))
         return f
 
     def teardown_app_request(self, f):
@@ -425,18 +419,14 @@ class Blueprint(Scaffold):
         function is executed when tearing down each request, even if outside of
         the blueprint.
         """
-        self.record_once(
-            lambda s: s.app.teardown_request_funcs.setdefault(None, []).append(f)
-        )
+        self.record_once(lambda s: s.app.teardown_request_funcs.setdefault(None, []).append(f))
         return f
 
     def app_context_processor(self, f):
         """Like :meth:`Flask.context_processor` but for a blueprint.  Such a
         function is executed each request, even if outside of the blueprint.
         """
-        self.record_once(
-            lambda s: s.app.template_context_processors.setdefault(None, []).append(f)
-        )
+        self.record_once(lambda s: s.app.template_context_processors.setdefault(None, []).append(f))
         return f
 
     def app_errorhandler(self, code):
@@ -452,14 +442,10 @@ class Blueprint(Scaffold):
 
     def app_url_value_preprocessor(self, f):
         """Same as :meth:`url_value_preprocessor` but application wide."""
-        self.record_once(
-            lambda s: s.app.url_value_preprocessors.setdefault(None, []).append(f)
-        )
+        self.record_once(lambda s: s.app.url_value_preprocessors.setdefault(None, []).append(f))
         return f
 
     def app_url_defaults(self, f):
         """Same as :meth:`url_defaults` but application wide."""
-        self.record_once(
-            lambda s: s.app.url_default_functions.setdefault(None, []).append(f)
-        )
+        self.record_once(lambda s: s.app.url_default_functions.setdefault(None, []).append(f))
         return f
